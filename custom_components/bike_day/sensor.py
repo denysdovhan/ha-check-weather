@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 import voluptuous as vol
-
+import datetime as dt
 import homeassistant.util.dt as dt_util
 from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
@@ -189,7 +189,7 @@ class BikeDaySensor(BinarySensorEntity):
             raise HomeAssistantError(f"Weather forecast is not available for {self._weather_entity}")
 
         # Filter forecasts for the next N hours
-        end_time = dt_util.now() + dt_util.timedelta(hours=self._hours)
+        end_time = dt_util.now() + dt.timedelta(hours=self._hours)
         hours_forecasts = [
             entry for entry in forecasts
             if dt_util.parse_datetime(entry.get(ATTR_FORECAST_TIME)) < end_time
