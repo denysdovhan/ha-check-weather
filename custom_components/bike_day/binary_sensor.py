@@ -60,21 +60,14 @@ BAD_CONDITIONS = [
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    entry: ConfigEntry,
+    config_entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback
 ) -> None:
-    LOGGER.debug("Setup new entry: %s", entry)
+    LOGGER.debug("Setup new entry: %s", config_entry)
      
     async_add_entities(
         [
-            BikeDaySensor(
-                entry,
-                entity_description=BinarySensorEntityDescription(
-                    key=DOMAIN,
-                    name=NAME,
-                    icon=ICON_OFF
-                )
-            )
+            BikeDaySensor(config_entry)
         ]
     )
 
@@ -85,9 +78,12 @@ class BikeDaySensor(BinarySensorEntity):
     def __init__(
         self,
         config_entry: ConfigEntry,
-        entity_description: BinarySensorEntityDescription,
     ) -> None:
-        self.entity_description = entity_description
+        self.entity_description = BinarySensorEntityDescription(
+            key=DOMAIN,
+            name=NAME,
+            icon=ICON_OFF
+        )
         self._config_entry = config_entry
 
         self._attr_is_on = None
