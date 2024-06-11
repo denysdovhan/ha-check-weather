@@ -67,13 +67,13 @@ async def async_setup_entry(
      
     async_add_entities(
         [
-            BikeDaySensor(config_entry)
+            CheckWeatherSensor(config_entry)
         ]
     )
 
 
-class BikeDaySensor(BinarySensorEntity):
-    """Implementation of Bike binary sensor."""
+class CheckWeatherSensor(BinarySensorEntity):
+    """Implementation of binary sensor."""
 
     def __init__(
         self,
@@ -176,7 +176,7 @@ class BikeDaySensor(BinarySensorEntity):
         ]
         
         # Check if any of the forecasts match the conditions
-        bike_day = True
+        is_on = True
         bad_condition = None
         precipitation = False
         strong_wind = False
@@ -196,7 +196,7 @@ class BikeDaySensor(BinarySensorEntity):
                 cold_temperature = True
 
             if bad_condition or precipitation or strong_wind or cold_temperature:
-                bike_day = False
+                is_on = False
                 bad_weather_time = forecast.get(ATTR_FORECAST_TIME)
                 LOGGER.debug("Bad conditions found at %s", bad_weather_time)
                 LOGGER.debug("Bad condition: %s", bad_condition)
@@ -205,7 +205,7 @@ class BikeDaySensor(BinarySensorEntity):
                 LOGGER.debug("Cold temperature: %s", cold_temperature)
                 break
 
-        self._attr_is_on = bike_day
+        self._attr_is_on = is_on
         self._attr_condition = bad_condition or weather_data.attributes.get(ATTR_FORECAST_CONDITION)
         self._attr_precipitation = precipitation
         self._attr_strong_wind = strong_wind

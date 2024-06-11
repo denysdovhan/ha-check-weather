@@ -2,8 +2,8 @@
     "config": {
         "step": {
             "user": {
-                "title": "Bike Day Sensor Settings",
-                "description": "Please enter the settings for the Bike Day Sensor.",
+                "title": "Check Weather Settings",
+                "description": "Please enter the settings for the Check Weather sensor.",
                 "data": {
                     "weather": "Weather entity",
                     "hours": "Hours to check",
@@ -17,8 +17,8 @@
     "options": {
         "step": {
             "init": {
-                "title":"Bike Day Sensor Settings",
-                "description": "Please enter the updated settings for the Bike Day Sensor.",
+                "title":"Check Weather Settings",
+                "description": "Please enter the updated settings for the Check Weather sensor.",
                 "data": {
                     "weather": "Weather entity",
                     "hours": "Hours to check",

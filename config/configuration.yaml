@@ -11,4 +11,4 @@ debugpy:
 logger:
   default: info
   logs:
-    custom_components.bike_day: debug
+    custom_components.check_weather: debug

@@ -20,6 +20,7 @@ from .const import (
     CONF_WEATHER,
     CONF_WIND_THRESHOLD,
     DEFAULT_HOURS,
+    NAME,
 )
 
 LOGGER = logging.getLogger(__name__)
@@ -71,21 +72,21 @@ async def build_schema(config_entry: config_entries.ConfigEntry | None, hass: Ho
         }
     )
 
-class BikeDayConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a configuration flow for a new Bike Day entry."""
+class CheckWeatherConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a configuration flow for a new entry."""
 
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
         """Get the options flow for this handler."""
-        return BikeDayOptionsFlow(config_entry)
+        return CheckWeatherOptionsFlow(config_entry)
 
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
 
         if user_input is not None:
             # Validate and store the user input
-            return self.async_create_entry(title="Bike Day", data=user_input)
+            return self.async_create_entry(title=NAME, data=user_input)
 
         data_schema = await build_schema(
             config_entry=None,
@@ -97,8 +98,8 @@ class BikeDayConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=data_schema
         )
 
-class BikeDayOptionsFlow(config_entries.OptionsFlow):
-    """Handle a change to options for a Bike Day entry."""
+class CheckWeatherOptionsFlow(config_entries.OptionsFlow):
+    """Handle a change to options for an entry."""
 
     def __init__(self, config_entry):
         """Initialize the options flow."""

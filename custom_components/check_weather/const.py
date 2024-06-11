@@ -1,9 +1,9 @@
-NAME = "Bike Day"
-DOMAIN = "bike_day"
+NAME = "Check Weather"
+DOMAIN = "check_weather"
 
 # Icons
-ICON_ON = "mdi:bike-fast"
-ICON_OFF = "mdi:bike"
+ICON_ON = "mdi:cloud-check-variant"
+ICON_OFF = "mdi:cloud-alert"
 
 # Configuration option
 CONF_WEATHER = "weather"

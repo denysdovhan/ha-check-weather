@@ -1,6 +1,6 @@
 {
-  "domain": "bike_day",
-  "name": "Bike Day",
+  "domain": "check_weather",
+  "name": "Check Weather",
   "codeowners": [
     "@denysdovhan"
   ],

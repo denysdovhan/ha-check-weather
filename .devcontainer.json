@@ -1,5 +1,5 @@
 {
-    "name": "ha-bike-day",
+    "name": "ha-check-weather",
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
     "postCreateCommand": "scripts/setup",
     "forwardPorts": [
