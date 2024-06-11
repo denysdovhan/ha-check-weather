@@ -2,13 +2,15 @@ from __future__ import annotations
 
 import logging
 
-import voluptuous as vol
 import datetime as dt
 import homeassistant.util.dt as dt_util
-from homeassistant.const import CONF_NAME
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.components.binary_sensor import BinarySensorEntity, PLATFORM_SCHEMA
+from homeassistant.components.binary_sensor import (
+    BinarySensorEntity,
+    BinarySensorEntityDescription,
+)
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -30,38 +32,18 @@ from homeassistant.components.weather import (
 )
 
 from .const import (
+    NAME,
+    DOMAIN,
     CONF_HOURS,
     CONF_PREC_THRESHOLD,
     CONF_TEMP_THRESHOLD,
     CONF_WEATHER,
     CONF_WIND_THRESHOLD,
-    DEFAULT_HOURS,
-    DEFAULT_NAME,
-    DEFAULT_PREC_THRESHOLD,
-    DEFAULT_TEMP_THRESHOLD,
-    DEFAULT_WIND_THRESHOLD,
     ICON_ON,
     ICON_OFF
 )
 
 LOGGER = logging.getLogger(__name__)
-
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
-    {
-        vol.Required(CONF_WEATHER): cv.entity_domain(WEATHER_DOMAIN),
-        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-        vol.Optional(CONF_HOURS, default=DEFAULT_HOURS): cv.positive_int,
-        vol.Optional(
-            CONF_TEMP_THRESHOLD, default=DEFAULT_TEMP_THRESHOLD
-        ): cv.positive_float,
-        vol.Optional(
-            CONF_PREC_THRESHOLD, default=DEFAULT_PREC_THRESHOLD
-        ): cv.positive_float,
-        vol.Optional(
-            CONF_WIND_THRESHOLD, default=DEFAULT_WIND_THRESHOLD
-        ): cv.positive_float,
-    }
-)
 
 BAD_CONDITIONS = [
     ATTR_CONDITION_LIGHTNING,
@@ -73,22 +55,22 @@ BAD_CONDITIONS = [
     ATTR_CONDITION_POURING,
 ]
 
-async def async_setup_platform(
+async def async_setup_entry(
     hass: HomeAssistant,
-    config: ConfigType,
-    async_add_entities: AddEntitiesCallback,
-    discovery_info: DiscoveryInfoType | None = None,
-):
-    LOGGER.info(config)
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback
+) -> None:
+    LOGGER.info(entry)
+     
     async_add_entities(
         [
             BikeDaySensor(
-                config.get(CONF_NAME),
-                config.get(CONF_WEATHER),
-                config.get(CONF_HOURS),
-                config.get(CONF_TEMP_THRESHOLD),
-                config.get(CONF_PREC_THRESHOLD),
-                config.get(CONF_WIND_THRESHOLD),
+                entry,
+                entity_description=BinarySensorEntityDescription(
+                    key=DOMAIN,
+                    name=NAME,
+                    icon=ICON_OFF
+                )
             )
         ]
     )
@@ -99,17 +81,18 @@ class BikeDaySensor(BinarySensorEntity):
 
     def __init__(
         self,
-        friendly_name: str | None,
-        weather_entity: str,
-        hours: int,
-        temp_threshold: float,
-        prec_threshold: float,
-        wind_threshold: float,
+        entry: ConfigEntry,
+        entity_description: BinarySensorEntityDescription,
     ) -> None:
-        self._attr_name = friendly_name
-        self._attr_is_on = None
+        self.entity_description = entity_description
 
-        self._attr_unique_id = f"{weather_entity}_{hours}_bike_day"
+        self._weather_entity = entry.data.get(CONF_WEATHER)
+        self._hours = entry.data.get(CONF_HOURS)
+        self._temp_threshold = entry.data.get(CONF_TEMP_THRESHOLD)
+        self._prec_threshold = entry.data.get(CONF_PREC_THRESHOLD) 
+        self._wind_threshold = entry.data.get(CONF_WIND_THRESHOLD)
+
+        self._attr_is_on = None
 
         self._attr_condition = None
         self._attr_precipitation = None
@@ -117,19 +100,15 @@ class BikeDaySensor(BinarySensorEntity):
         self._attr_cold_temperature = None
         self._attr_time = None
 
-        self._weather_entity = weather_entity
-        self._hours = hours
-        self._temp_threshold = temp_threshold
-        self._prec_threshold = prec_threshold
-        self._wind_threshold = wind_threshold
+        self._attr_unique_id = f"{entry.entry_id}_{entry.domain}_{entry.data.get(CONF_WEATHER)}"
 
         LOGGER.debug(
             "Initiated with weather_entity: %s, hours: %i, temp_threshold: %.1f, prec_threshold: %.1f, wind_threshold: %.1f",
-            weather_entity,
-            hours,
-            temp_threshold,
-            prec_threshold,
-            wind_threshold,
+            self._weather_entity,
+            self._hours,
+            self._temp_threshold,
+            self._prec_threshold,
+            self._wind_threshold,
         )
 
     @property
@@ -164,8 +143,6 @@ class BikeDaySensor(BinarySensorEntity):
         weather_data = self.hass.states.get(self._weather_entity)
 
         LOGGER.debug("Weather data: %s", weather_data)
-        LOGGER.debug("Weather forecast: %s", weather_data.attributes.get('forecast'))
-
 
         if weather_data is None:
             self._attr_is_on = None

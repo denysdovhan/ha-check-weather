@@ -12,12 +12,3 @@ logger:
   default: info
   logs:
     custom_components.bike_day: debug
-
-sensor:
-  - platform: bike_day
-    name: Bike Day
-    weather: weather.forecast_home
-    # hours: 9
-#     # temperature_threshold: 10
-#     # precipitation_threshold: 0.1
-#     # wind_threshold: 20

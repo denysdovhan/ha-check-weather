@@ -1,0 +1,17 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Bike Day Sensor Settings",
+                "data": {
+                    "weather": "Weather entity",
+                    "hours": "Hours to check",
+                    "temperature_threshold": "Minimal comfortable temperature",
+                    "precipitation_threshold": "Max precipitaion threshold",
+                    "wind_threshold": "Max comfortable wind speed"
+                },
+                "description": "Please enter the settings for the Bike Day Sensor."
+            }
+        }
+    }
+}
