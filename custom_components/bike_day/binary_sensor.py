@@ -11,8 +11,6 @@ from homeassistant.components.binary_sensor import (
     BinarySensorEntityDescription,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers import config_validation as cv
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.components.weather import (
     DOMAIN as WEATHER_DOMAIN,
@@ -32,6 +30,11 @@ from homeassistant.components.weather import (
 )
 
 from .const import (
+    DEFAULT_HOURS,
+    DEFAULT_PREC_THRESHOLD,
+    DEFAULT_TEMP_THRESHOLD,
+    DEFAULT_WEATHER,
+    DEFAULT_WIND_THRESHOLD,
     NAME,
     DOMAIN,
     CONF_HOURS,
@@ -60,7 +63,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback
 ) -> None:
-    LOGGER.info(entry)
+    LOGGER.debug("Setup new entry: %s", entry)
      
     async_add_entities(
         [
@@ -81,16 +84,11 @@ class BikeDaySensor(BinarySensorEntity):
 
     def __init__(
         self,
-        entry: ConfigEntry,
+        config_entry: ConfigEntry,
         entity_description: BinarySensorEntityDescription,
     ) -> None:
         self.entity_description = entity_description
-
-        self._weather_entity = entry.data.get(CONF_WEATHER)
-        self._hours = entry.data.get(CONF_HOURS)
-        self._temp_threshold = entry.data.get(CONF_TEMP_THRESHOLD)
-        self._prec_threshold = entry.data.get(CONF_PREC_THRESHOLD) 
-        self._wind_threshold = entry.data.get(CONF_WIND_THRESHOLD)
+        self._config_entry = config_entry
 
         self._attr_is_on = None
 
@@ -100,16 +98,10 @@ class BikeDaySensor(BinarySensorEntity):
         self._attr_cold_temperature = None
         self._attr_time = None
 
-        self._attr_unique_id = f"{entry.entry_id}_{entry.domain}_{entry.data.get(CONF_WEATHER)}"
+        # Generate based on name. Allow updating name.
+        self._attr_unique_id = f"{config_entry.entry_id}_{config_entry.domain}"
 
-        LOGGER.debug(
-            "Initiated with weather_entity: %s, hours: %i, temp_threshold: %.1f, prec_threshold: %.1f, wind_threshold: %.1f",
-            self._weather_entity,
-            self._hours,
-            self._temp_threshold,
-            self._prec_threshold,
-            self._wind_threshold,
-        )
+        LOGGER.debug("Initiated with entry options: %s", self._config_entry.options)
 
     @property
     def is_on(self) -> bool:
@@ -137,19 +129,32 @@ class BikeDaySensor(BinarySensorEntity):
             "bad_weather_at": self._attr_time,
             "cold_temperature": self._attr_cold_temperature,
         }
+    
+    def _get_config_option(self, key: str, default=None):
+        """Get a value from the config entry or default."""
+        return self._config_entry.options.get(
+            key,
+            self._config_entry.data.get(key, default)
+        )
 
     async def async_update(self) -> None:
         """Update the state."""
-        weather_data = self.hass.states.get(self._weather_entity)
+        weather_entity = self._get_config_option(CONF_WEATHER, DEFAULT_WEATHER)        
+        hours_to_check = self._get_config_option(CONF_HOURS, DEFAULT_HOURS)
+        prec_threshold = self._get_config_option(CONF_PREC_THRESHOLD, DEFAULT_PREC_THRESHOLD)
+        wind_threshold = self._get_config_option(CONF_WIND_THRESHOLD, DEFAULT_WIND_THRESHOLD)
+        temp_threshold = self._get_config_option(CONF_TEMP_THRESHOLD, DEFAULT_TEMP_THRESHOLD)
+
+        weather_data = self.hass.states.get(weather_entity)
 
         LOGGER.debug("Weather data: %s", weather_data)
 
         if weather_data is None:
             self._attr_is_on = None
-            raise HomeAssistantError(f"Weather entity {self._weather_entity} not found")
+            raise HomeAssistantError(f"Weather entity {weather_entity} not found")
 
         service_data = {
-            "entity_id": self._weather_entity,
+            "entity_id": weather_entity,
             "type": "hourly",
         }
         entity_forecasts = await self.hass.services.async_call(
@@ -159,14 +164,16 @@ class BikeDaySensor(BinarySensorEntity):
             blocking=True, 
             return_response=True
         )
-        forecasts = entity_forecasts.get(self._weather_entity, {}).get('forecast')
+        forecasts = entity_forecasts.get(weather_entity, {}).get('forecast')
 
         if forecasts is None:
             self._attr_is_on = None
-            raise HomeAssistantError(f"Weather forecast is not available for {self._weather_entity}")
+            raise HomeAssistantError(f"Weather forecast is not available for {weather_entity}")
+
+        LOGGER.debug("Checking next %i hours", hours_to_check)
 
         # Filter forecasts for the next N hours
-        end_time = dt_util.now() + dt.timedelta(hours=self._hours)
+        end_time = dt_util.now() + dt.timedelta(hours=hours_to_check)
         hours_forecasts = [
             entry for entry in forecasts
             if dt_util.parse_datetime(entry.get(ATTR_FORECAST_TIME)) < end_time
@@ -185,11 +192,11 @@ class BikeDaySensor(BinarySensorEntity):
             
             if forecast.get(ATTR_FORECAST_CONDITION) in BAD_CONDITIONS:
                 bad_condition = forecast.get(ATTR_FORECAST_CONDITION)
-            if forecast.get(ATTR_FORECAST_PRECIPITATION) > self._prec_threshold:
+            if forecast.get(ATTR_FORECAST_PRECIPITATION) > prec_threshold:
                 precipitation = True
-            if forecast.get(ATTR_FORECAST_WIND_SPEED) > self._wind_threshold:
+            if forecast.get(ATTR_FORECAST_WIND_SPEED) > wind_threshold:
                 strong_wind = True
-            if forecast.get(ATTR_FORECAST_TEMP) < self._temp_threshold:
+            if forecast.get(ATTR_FORECAST_TEMP) < temp_threshold:
                 cold_temperature = True
 
             if bad_condition or precipitation or strong_wind or cold_temperature:
@@ -203,7 +210,7 @@ class BikeDaySensor(BinarySensorEntity):
                 break
 
         self._attr_is_on = bike_day
-        self._attr_condition = bad_condition or self._weather_entity.attributes.get(ATTR_FORECAST_CONDITION)
+        self._attr_condition = bad_condition or weather_data.attributes.get(ATTR_FORECAST_CONDITION)
         self._attr_precipitation = precipitation
         self._attr_strong_wind = strong_wind
         self._attr_cold_temperature = cold_temperature

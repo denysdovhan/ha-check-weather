@@ -29,5 +29,4 @@ async def async_reload_entry(
     entry: ConfigEntry,
 ) -> None:
     """Reload config entry."""
-    await async_unload_entry(hass, entry)
-    await async_setup_entry(hass, entry)
+    return await hass.config_entries.async_reload(entry.entry_id)
