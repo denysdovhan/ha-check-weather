@@ -43,7 +43,10 @@ jobs:
           title: |
             chore(release): Bump manifest to ${{ steps.release_drafter.outputs.tag_name }}
           body: |
-            # Release candidate for ${{ steps.release_drafter.outputs.tag_name }}
+            # ${{ steps.release_drafter.outputs.name }}
+
+            Don't forget to publish this release after merging this PR:
+            ${{ steps.release_drafter.outputs.html_url }}
 
             ${{ steps.release_drafter.outputs.body }}
           branch: release-candidate
