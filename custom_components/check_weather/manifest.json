@@ -5,8 +5,8 @@
     "@denysdovhan"
   ],
   "config_flow": true,
-  "documentation": "https://github.com/denysdovhan/todo",
+  "documentation": "https://github.com/denysdovhan/ha-check-weather",
   "iot_class": "calculated",
-  "issue_tracker": "https://github.com/denysdovhan/todo",
-  "version": "0.0.0"
+  "issue_tracker": "https://github.com/denysdovhan/ha-check-weather",
+  "version": "0.1.0"
 }

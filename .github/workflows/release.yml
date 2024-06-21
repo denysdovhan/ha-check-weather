@@ -12,14 +12,12 @@ permissions:
 
 jobs:
   draft_release:
+    name: Draft Release
     permissions:
       contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
-      pull-requests: write
+      pull-requests: read
     runs-on: ubuntu-latest
     steps:
-      # Drafts your next Release notes as Pull Requests are merged into "master"
       - name: 📝 Draft Release
         uses: release-drafter/release-drafter@v6
         env:
