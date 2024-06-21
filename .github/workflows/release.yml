@@ -15,10 +15,37 @@ jobs:
     name: Draft Release
     permissions:
       contents: write
-      pull-requests: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
       - name: 📝 Draft Release
+        id: release_drafter
         uses: release-drafter/release-drafter@v6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Bump version
+        run: python scripts/bump_version ${{ steps.release_drafter.outputs.tag_name }}
+
+      - name: ↩️ Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: |
+            chore(release): Bump manifest to ${{ steps.release_drafter.outputs.tag_name }}
+          title: |
+            chore(release): Bump manifest to ${{ steps.release_drafter.outputs.tag_name }}
+          body: |
+            # Release candidate for ${{ steps.release_drafter.outputs.tag_name }}
+
+            ${{ steps.release_drafter.outputs.body }}
+          branch: release-candidate
+          delete-branch: true
+
