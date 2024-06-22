@@ -51,6 +51,13 @@ The integration will create a new `binary_sensor` entity that will turn on when 
 
 You can safely rename the entity to something more meaningful, like **Bike Day** or anything else.
 
+## Translations
+
+Please, help to add more translations and improve existing ones. Here's a list of supported languages:
+
+* English
+* [Your language?][add-translation]
+
 ## Development
 
 Want to contribute to the project?
@@ -82,3 +89,4 @@ MIT © [Denys Dovhan][denysdovhan]
 [denysdovhan]: https://github.com/denysdovhan
 [hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration 
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
+[add-translation]: https://github.com/denysdovhan/check-weather/blob/master/contributing.md#how-to-add-translation
