@@ -1,5 +1,9 @@
 name-template: 'v$RESOLVED_VERSION 🌈'
 tag-template: 'v$RESOLVED_VERSION'
+exclude-contributors:
+  - 'github-actions[bot]'
+  - 'github-actions'
+  - 'dependabot'
 categories:
   - title: '❗️ Breaking Changes'
     labels:
@@ -37,3 +41,7 @@ template: |
   ## What's Changed
 
   $CHANGES
+
+  ## ⭐️ Contributors
+
+  $CONTRIBUTORS
