@@ -23,16 +23,6 @@ jobs:
       - name: 📦 Create zip package
         run: zip -r ha-check-weather.zip custom_components/check_weather
 
-      - name: 📤 Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ha-check-weather.zip
-          asset_name: ha-check-weather.zip
-          asset_content_type: application/zip
-      
       - name: 📤  Upload zip to release
         uses: svenstaro/upload-release-action@v2
         with:
