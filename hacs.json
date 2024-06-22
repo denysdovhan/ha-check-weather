@@ -1,5 +1,7 @@
 {
   "name": "Check Weather",
   "homeassistant": "2024.6.0",
-  "render_readme": true
+  "domains": ["binary_sensor"],
+  "render_readme": true,
+  "zip_release": true
 }

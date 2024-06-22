@@ -1,54 +1,43 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-
-permissions:
-  contents: read
+  release:
+    types: [published]
 
 jobs:
-  draft_release:
-    name: Draft Release
-    permissions:
-      contents: write
-      pull-requests: write
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: ⬇️ Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: 📝 Draft Release
-        id: release_drafter
-        uses: release-drafter/release-drafter@v6
+      - name: 🏷️ Bump manifest version
+        run: python scripts/bump_version ${{ github.ref_name }}
+
+      - name: 📦 Create zip package
+        run: zip -r ha-check-weather.zip custom_components/check_weather
+
+      - name: 📤 Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🏷️ Bump version
-        run: python scripts/bump_version ${{ steps.release_drafter.outputs.tag_name }}
-
-      - name: ↩️ Create Pull Request
-        uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: |
-            chore(release): Bump manifest to ${{ steps.release_drafter.outputs.tag_name }}
-          title: |
-            chore(release): Bump manifest to ${{ steps.release_drafter.outputs.tag_name }}
-          body: |
-            # ${{ steps.release_drafter.outputs.name }}
-
-            Don't forget to publish this release after merging this PR:
-            ${{ steps.release_drafter.outputs.html_url }}
-
-            ${{ steps.release_drafter.outputs.body }}
-          branch: release-candidate
-          delete-branch: true
-
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ha-check-weather.zip
+          asset_name: ha-check-weather.zip
+          asset_content_type: application/zip
+      
+      - name: 📤  Upload zip to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ha-check-weather.zip
+          asset_name: ha-check-weather.zip
+          tag: ${{ github.ref }}
+          overwrite: true

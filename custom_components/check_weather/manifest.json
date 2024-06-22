@@ -8,5 +8,5 @@
   "documentation": "https://github.com/denysdovhan/ha-check-weather",
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/denysdovhan/ha-check-weather",
-  "version": "0.0.0"
+  "version": "0.0.0-unreleased"
 }
