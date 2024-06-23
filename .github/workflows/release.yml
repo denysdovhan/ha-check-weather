@@ -24,13 +24,14 @@ jobs:
         run: python scripts/bump_version ${{ github.ref_name }}
 
       - name: 📦 Create zip package
-        run: zip -r ha-check-weather.zip custom_components/check_weather
+        working-directory: custom_components/check_weather
+        run: zip -r check-weather.zip .
 
       - name: 📤  Upload zip to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ha-check-weather.zip
-          asset_name: ha-check-weather.zip
+          file: custom_components/check_weather/check-weather.zip
+          asset_name: check-weather.zip
           tag: ${{ github.ref }}
           overwrite: true
