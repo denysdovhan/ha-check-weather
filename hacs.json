@@ -3,5 +3,5 @@
   "homeassistant": "2024.6.0",
   "render_readme": true,
   "zip_release": true,
-  "filename": "ha-check-weather.zip"
+  "filename": "check-weather.zip"
 }
