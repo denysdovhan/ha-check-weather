@@ -1,50 +1,62 @@
+"""Binary sensor platform for check_weather."""
+
 from __future__ import annotations
 
-import logging
-
 import datetime as dt
-import homeassistant.util.dt as dt_util
-from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import HomeAssistantError
+import logging
+from typing import TYPE_CHECKING
+
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     BinarySensorEntityDescription,
 )
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.components.weather import (
-    DOMAIN as WEATHER_DOMAIN,
-    SERVICE_GET_FORECASTS,
-    ATTR_FORECAST_TIME,
-    ATTR_FORECAST_CONDITION,
-    ATTR_FORECAST_TEMP,
-    ATTR_FORECAST_PRECIPITATION,
-    ATTR_FORECAST_WIND_SPEED,
+    ATTR_CONDITION_HAIL,
     ATTR_CONDITION_LIGHTNING,
     ATTR_CONDITION_LIGHTNING_RAINY,
-    ATTR_CONDITION_HAIL,
+    ATTR_CONDITION_POURING,
     ATTR_CONDITION_RAINY,
     ATTR_CONDITION_SNOWY,
     ATTR_CONDITION_SNOWY_RAINY,
-    ATTR_CONDITION_POURING,
+    ATTR_FORECAST_CONDITION,
+    ATTR_FORECAST_PRECIPITATION,
+    ATTR_FORECAST_TEMP,
+    ATTR_FORECAST_TIME,
+    ATTR_FORECAST_WIND_SPEED,
+    SERVICE_GET_FORECASTS,
 )
+from homeassistant.components.weather import (
+    DOMAIN as WEATHER_DOMAIN,
+)
+from homeassistant.exceptions import HomeAssistantError
+from homeassistant.util import dt as dt_util
 
 from .const import (
-    DEFAULT_HOURS,
-    DEFAULT_PREC_THRESHOLD,
-    DEFAULT_TEMP_THRESHOLD,
-    DEFAULT_WEATHER,
-    DEFAULT_WIND_THRESHOLD,
-    NAME,
-    DOMAIN,
+    ATTR_BAD_WEATHER_TIME,
+    ATTR_COLD_TEMPERATURE,
+    ATTR_CONDITION,
+    ATTR_PRECIPIATION,
+    ATTR_STRONG_WIND,
     CONF_HOURS,
     CONF_PREC_THRESHOLD,
     CONF_TEMP_THRESHOLD,
     CONF_WEATHER,
     CONF_WIND_THRESHOLD,
+    DEFAULT_HOURS,
+    DEFAULT_PREC_THRESHOLD,
+    DEFAULT_TEMP_THRESHOLD,
+    DEFAULT_WEATHER,
+    DEFAULT_WIND_THRESHOLD,
+    DOMAIN,
+    ICON_OFF,
     ICON_ON,
-    ICON_OFF
+    NAME,
 )
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+    from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 LOGGER = logging.getLogger(__name__)
 
@@ -58,18 +70,15 @@ BAD_CONDITIONS = [
     ATTR_CONDITION_POURING,
 ]
 
+
 async def async_setup_entry(
-    hass: HomeAssistant,
+    hass: HomeAssistant,  # noqa: ARG001
     config_entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
+    """Set up the binary sensor platform."""
     LOGGER.debug("Setup new entry: %s", config_entry)
-     
-    async_add_entities(
-        [
-            CheckWeatherSensor(config_entry)
-        ]
-    )
+    async_add_entities([CheckWeatherSensor(config_entry)])
 
 
 class CheckWeatherSensor(BinarySensorEntity):
@@ -79,10 +88,11 @@ class CheckWeatherSensor(BinarySensorEntity):
         self,
         config_entry: ConfigEntry,
     ) -> None:
+        """Initialize the sensor."""
         self.entity_description = BinarySensorEntityDescription(
             key=DOMAIN,
             name=NAME,
-            icon=ICON_OFF
+            icon=ICON_OFF,
         )
         self._config_entry = config_entry
 
@@ -94,14 +104,13 @@ class CheckWeatherSensor(BinarySensorEntity):
         self._attr_cold_temperature = None
         self._attr_time = None
 
-        # Generate based on name. Allow updating name.
         self._attr_unique_id = f"{config_entry.entry_id}_{config_entry.domain}"
 
         LOGGER.debug("Initiated with entry options: %s", self._config_entry.options)
 
     @property
     def is_on(self) -> bool:
-        "Report if the binary sensor is on."
+        """Report if the binary sensor is on."""
         return self._attr_is_on
 
     @property
@@ -110,36 +119,68 @@ class CheckWeatherSensor(BinarySensorEntity):
         return self._attr_is_on is not None
 
     @property
-    def icon(self):
+    def icon(self) -> str:
         """Return the icon to use in the frontend, if any."""
         return ICON_ON if self.is_on else ICON_OFF
 
     @property
     def extra_state_attributes(self) -> dict:
         """Return the extra state attributes."""
-        # FIXME: Define the attributes as constants in const.py
         return {
-            "condition": self._attr_condition,
-            "precipitation": self._attr_precipitation,
-            "strong_wind": self._attr_strong_wind,
-            "bad_weather_at": self._attr_time,
-            "cold_temperature": self._attr_cold_temperature,
+            [ATTR_CONDITION]: self._attr_condition,
+            [ATTR_PRECIPIATION]: self._attr_precipitation,
+            [ATTR_STRONG_WIND]: self._attr_strong_wind,
+            [ATTR_BAD_WEATHER_TIME]: self._attr_time,
+            [ATTR_COLD_TEMPERATURE]: self._attr_cold_temperature,
         }
-    
-    def _get_config_option(self, key: str, default=None):
+
+    def get_config_option(self, key: str, default: any | None = None) -> any:
         """Get a value from the config entry or default."""
         return self._config_entry.options.get(
             key,
-            self._config_entry.data.get(key, default)
+            self._config_entry.data.get(key, default),
         )
+
+    async def get_forecast(self, weather_entity: str) -> dict:
+        """Get the forecast for the weather entity."""
+        service_data = {
+            "entity_id": weather_entity,
+            "type": "hourly",
+        }
+        entity_forecasts = await self.hass.services.async_call(
+            WEATHER_DOMAIN,
+            SERVICE_GET_FORECASTS,
+            service_data,
+            blocking=True,
+            return_response=True,
+        )
+        return entity_forecasts.get(weather_entity, {}).get("forecast")
+
+    def get_next_n_hours_forecast(self, forecasts: list, hours_to_check: int) -> list:
+        """Filter forecasts for the next N hours."""
+        end_time = dt_util.now() + dt.timedelta(hours=hours_to_check)
+        return [
+            entry
+            for entry in forecasts
+            if dt_util.parse_datetime(entry.get(ATTR_FORECAST_TIME)) < end_time
+        ]
 
     async def async_update(self) -> None:
         """Update the state."""
-        weather_entity = self._get_config_option(CONF_WEATHER, DEFAULT_WEATHER)        
-        hours_to_check = self._get_config_option(CONF_HOURS, DEFAULT_HOURS)
-        prec_threshold = self._get_config_option(CONF_PREC_THRESHOLD, DEFAULT_PREC_THRESHOLD)
-        wind_threshold = self._get_config_option(CONF_WIND_THRESHOLD, DEFAULT_WIND_THRESHOLD)
-        temp_threshold = self._get_config_option(CONF_TEMP_THRESHOLD, DEFAULT_TEMP_THRESHOLD)
+        weather_entity = self.get_config_option(CONF_WEATHER, DEFAULT_WEATHER)
+        hours_to_check = self.get_config_option(CONF_HOURS, DEFAULT_HOURS)
+        prec_threshold = self.get_config_option(
+            CONF_PREC_THRESHOLD,
+            DEFAULT_PREC_THRESHOLD,
+        )
+        wind_threshold = self.get_config_option(
+            CONF_WIND_THRESHOLD,
+            DEFAULT_WIND_THRESHOLD,
+        )
+        temp_threshold = self.get_config_option(
+            CONF_TEMP_THRESHOLD,
+            DEFAULT_TEMP_THRESHOLD,
+        )
 
         weather_data = self.hass.states.get(weather_entity)
 
@@ -147,34 +188,18 @@ class CheckWeatherSensor(BinarySensorEntity):
 
         if weather_data is None:
             self._attr_is_on = None
-            raise HomeAssistantError(f"Weather entity {weather_entity} not found")
+            msg = f"Weather entity {weather_entity} not found"
+            raise HomeAssistantError(msg)
 
-        service_data = {
-            "entity_id": weather_entity,
-            "type": "hourly",
-        }
-        entity_forecasts = await self.hass.services.async_call(
-            WEATHER_DOMAIN, 
-            SERVICE_GET_FORECASTS, 
-            service_data, 
-            blocking=True, 
-            return_response=True
-        )
-        forecasts = entity_forecasts.get(weather_entity, {}).get('forecast')
+        forecasts = await self.get_forecast(weather_entity)
 
         if forecasts is None:
             self._attr_is_on = None
-            raise HomeAssistantError(f"Weather forecast is not available for {weather_entity}")
+            msg = f"Weather forecast is not available for {weather_entity}"
+            raise HomeAssistantError(msg)
 
         LOGGER.debug("Checking next %i hours", hours_to_check)
 
-        # Filter forecasts for the next N hours
-        end_time = dt_util.now() + dt.timedelta(hours=hours_to_check)
-        hours_forecasts = [
-            entry for entry in forecasts
-            if dt_util.parse_datetime(entry.get(ATTR_FORECAST_TIME)) < end_time
-        ]
-        
         # Check if any of the forecasts match the conditions
         is_on = True
         bad_condition = None
@@ -183,9 +208,9 @@ class CheckWeatherSensor(BinarySensorEntity):
         cold_temperature = False
         bad_weather_time = None
 
-        for forecast in hours_forecasts:
+        for forecast in self.get_next_n_hours_forecast(forecasts, hours_to_check):
             LOGGER.debug("Forecast: %s", forecast)
-            
+
             if forecast.get(ATTR_FORECAST_CONDITION) in BAD_CONDITIONS:
                 bad_condition = forecast.get(ATTR_FORECAST_CONDITION)
             if forecast.get(ATTR_FORECAST_PRECIPITATION) > prec_threshold:
@@ -206,7 +231,9 @@ class CheckWeatherSensor(BinarySensorEntity):
                 break
 
         self._attr_is_on = is_on
-        self._attr_condition = bad_condition or weather_data.attributes.get(ATTR_FORECAST_CONDITION)
+        self._attr_condition = bad_condition or weather_data.attributes.get(
+            ATTR_FORECAST_CONDITION,
+        )
         self._attr_precipitation = precipitation
         self._attr_strong_wind = strong_wind
         self._attr_cold_temperature = cold_temperature

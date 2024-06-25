@@ -1,15 +1,24 @@
-from __future__ import annotations
-import logging
+"""Init file for the Check Weather integration."""
 
-from homeassistant.core import HomeAssistant
+from __future__ import annotations
+
+import logging
+from typing import TYPE_CHECKING
+
 from homeassistant.const import Platform
-from homeassistant.config_entries import ConfigEntry
+
+if TYPE_CHECKING:
+    from homeassistant.config_entries import ConfigEntry
+    from homeassistant.core import HomeAssistant
+
 
 LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = [Platform.BINARY_SENSOR]
 
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Set up a new entry."""
     LOGGER.info("Setup entry: %s", entry)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(async_reload_entry))
