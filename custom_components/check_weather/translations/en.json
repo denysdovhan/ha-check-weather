@@ -1,33 +1,33 @@
 {
-    "title": "Check Weather",
-    "config": {
-        "step": {
-            "user": {
-                "title": "Check Weather Settings",
-                "description": "Please enter the settings for the Check Weather sensor.",
-                "data": {
-                    "weather": "Weather entity",
-                    "hours": "Hours to check",
-                    "temperature_threshold": "Minimal comfortable temperature",
-                    "precipitation_threshold": "Max precipitaion threshold",
-                    "wind_threshold": "Max comfortable wind speed"
-                }
-            }
+  "title": "Check Weather",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Check Weather Settings",
+        "description": "Please enter the settings for the Check Weather sensor.",
+        "data": {
+          "weather": "Weather entity",
+          "hours": "Hours to check",
+          "temperature_threshold": "Minimal comfortable temperature",
+          "precipitation_threshold": "Max precipitaion threshold",
+          "wind_threshold": "Max comfortable wind speed"
         }
-    },
-    "options": {
-        "step": {
-            "init": {
-                "title":"Check Weather Settings",
-                "description": "Please enter the updated settings for the Check Weather sensor.",
-                "data": {
-                    "weather": "Weather entity",
-                    "hours": "Hours to check",
-                    "temperature_threshold": "Minimal comfortable temperature",
-                    "precipitation_threshold": "Max precipitaion threshold",
-                    "wind_threshold": "Max comfortable wind speed"
-                }
-            }
-        }
+      }
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Check Weather Settings",
+        "description": "Please enter the updated settings for the Check Weather sensor.",
+        "data": {
+          "weather": "Weather entity",
+          "hours": "Hours to check",
+          "temperature_threshold": "Minimal comfortable temperature",
+          "precipitation_threshold": "Max precipitaion threshold",
+          "wind_threshold": "Max comfortable wind speed"
+        }
+      }
+    }
+  }
 }

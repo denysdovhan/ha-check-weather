@@ -1,22 +1,20 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Home Assistant: Attach Local",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
         {
-            // Attaching to Local Home Assistant
-            // https://www.home-assistant.io/integrations/debugpy/
-            "name": "Home Assistant: Attach Local",
-            "type": "debugpy",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 5678
-            },
-            "pathMappings": [
-                {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "."
-                }
-            ]
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "."
         }
-    ]
+      ]
+    }
+  ]
 }

@@ -1,3 +1,5 @@
+"""Constants for the Check Weather integration."""
+
 NAME = "Check Weather"
 DOMAIN = "check_weather"
 
@@ -18,3 +20,10 @@ DEFAULT_HOURS = 8
 DEFAULT_TEMP_THRESHOLD = 10
 DEFAULT_PREC_THRESHOLD = 0.1
 DEFAULT_WIND_THRESHOLD = 20
+
+# Attributes
+ATTR_CONDITION = "condition"
+ATTR_PRECIPIATION = "precipitation"
+ATTR_STRONG_WIND = "strong_wind"
+ATTR_BAD_WEATHER_TIME = "bad_weather_time"
+ATTR_COLD_TEMPERATURE = "cold_temperature"

@@ -5,12 +5,14 @@ __pycache__
 */build/*
 */dist/*
 
-
 # misc
 .coverage
 .vscode/settings.json
 coverage.xml
+.ruff_cache
 
+# macOS
+.DS_Store
 
 # Home Assistant configuration
 config/*

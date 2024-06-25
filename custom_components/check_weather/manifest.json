@@ -1,9 +1,7 @@
 {
   "domain": "check_weather",
   "name": "Check Weather",
-  "codeowners": [
-    "@denysdovhan"
-  ],
+  "codeowners": ["@denysdovhan"],
   "config_flow": true,
   "documentation": "https://github.com/denysdovhan/ha-check-weather",
   "iot_class": "calculated",
