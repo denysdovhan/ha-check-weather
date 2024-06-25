@@ -17,9 +17,9 @@ This is a very simple binary sensor that checks the weather for the next few hou
 
 Ideas on how to use this sensor:
 
-* **🚴‍♂️ Bike Day** – check if the weather is good enough to go out for a ride.
-* **🚶 Walkable Weather** – check if the weather is good enough to go out for a walk.
-* **☔️ Will it Rain** – check if it will rain today.
+- **🚴‍♂️ Bike Day** – check if the weather is good enough to go out for a ride.
+- **🚶 Walkable Weather** – check if the weather is good enough to go out for a walk.
+- **☔️ Will it Rain** – check if it will rain today.
 
 You can rename the sensor to anything more meaningful to you.
 
@@ -55,8 +55,8 @@ You can safely rename the entity to something more meaningful, like **Bike Day**
 
 Please, help to add more translations and improve existing ones. Here's a list of supported languages:
 
-* English
-* [Your language?][add-translation]
+- English
+- [Your language?][add-translation]
 
 ## Development
 
@@ -87,6 +87,6 @@ MIT © [Denys Dovhan][denysdovhan]
 
 [home-assistant]: https://www.home-assistant.io/
 [denysdovhan]: https://github.com/denysdovhan
-[hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration 
+[hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
 [add-translation]: https://github.com/denysdovhan/check-weather/blob/master/contributing.md#how-to-add-translation
