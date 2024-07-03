@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
@@ -127,14 +127,14 @@ class CheckWeatherSensor(BinarySensorEntity):
     def extra_state_attributes(self) -> dict:
         """Return the extra state attributes."""
         return {
-            [ATTR_CONDITION]: self._attr_condition,
-            [ATTR_PRECIPIATION]: self._attr_precipitation,
-            [ATTR_STRONG_WIND]: self._attr_strong_wind,
-            [ATTR_BAD_WEATHER_TIME]: self._attr_time,
-            [ATTR_COLD_TEMPERATURE]: self._attr_cold_temperature,
+            ATTR_CONDITION: self._attr_condition,
+            ATTR_PRECIPIATION: self._attr_precipitation,
+            ATTR_STRONG_WIND: self._attr_strong_wind,
+            ATTR_BAD_WEATHER_TIME: self._attr_time,
+            ATTR_COLD_TEMPERATURE: self._attr_cold_temperature,
         }
 
-    def get_config_option(self, key: str, default: any | None = None) -> any:
+    def get_config_option(self, key: str, default: Any = None) -> any:
         """Get a value from the config entry or default."""
         return self._config_entry.options.get(
             key,

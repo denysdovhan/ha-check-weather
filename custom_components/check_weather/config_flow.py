@@ -1,6 +1,7 @@
 """Adds config flow for Check Weather."""
 
 import logging
+from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
@@ -31,7 +32,7 @@ LOGGER = logging.getLogger(__name__)
 def get_config_value(
     entry: config_entries.ConfigEntry | None,
     key: str,
-    default: any | None = None,
+    default: Any = None,
 ) -> any:
     """Get a value from the config entry or default."""
     if entry is not None:
