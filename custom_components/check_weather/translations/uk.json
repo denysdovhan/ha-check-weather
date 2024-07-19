@@ -31,5 +31,19 @@
         }
       }
     }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+        "state_attributes": {
+          "condition": { "name": "Умови" },
+          "precipitation": { "name": "Опади" },
+          "strong_wind": { "name": "Сильний вітер" },
+          "bad_weather_time": { "name": "Погана погода о" },
+          "cold_temperature": { "name": "Холодно" },
+          "hot_temperature": { "name": "Жарко" }
+        }
+      }
+    }
   }
 }
