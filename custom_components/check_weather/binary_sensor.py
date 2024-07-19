@@ -35,16 +35,19 @@ from .const import (
     ATTR_BAD_WEATHER_TIME,
     ATTR_COLD_TEMPERATURE,
     ATTR_CONDITION,
+    ATTR_HOT_TEMPERATURE,
     ATTR_PRECIPIATION,
     ATTR_STRONG_WIND,
     CONF_HOURS,
+    CONF_MAX_TEMP,
+    CONF_MIN_TEMP,
     CONF_PREC_THRESHOLD,
-    CONF_TEMP_THRESHOLD,
     CONF_WEATHER,
     CONF_WIND_THRESHOLD,
     DEFAULT_HOURS,
+    DEFAULT_MAX_TEMP,
+    DEFAULT_MIN_TEMP,
     DEFAULT_PREC_THRESHOLD,
-    DEFAULT_TEMP_THRESHOLD,
     DEFAULT_WEATHER,
     DEFAULT_WIND_THRESHOLD,
     DOMAIN,
@@ -102,6 +105,7 @@ class CheckWeatherSensor(BinarySensorEntity):
         self._attr_precipitation = None
         self._attr_strong_wind = None
         self._attr_cold_temperature = None
+        self._attr_hot_temperature = None
         self._attr_time = None
 
         self._attr_unique_id = f"{config_entry.entry_id}_{config_entry.domain}"
@@ -132,6 +136,7 @@ class CheckWeatherSensor(BinarySensorEntity):
             ATTR_STRONG_WIND: self._attr_strong_wind,
             ATTR_BAD_WEATHER_TIME: self._attr_time,
             ATTR_COLD_TEMPERATURE: self._attr_cold_temperature,
+            ATTR_HOT_TEMPERATURE: self._attr_hot_temperature,
         }
 
     def get_config_option(self, key: str, default: Any = None) -> any:
@@ -141,7 +146,7 @@ class CheckWeatherSensor(BinarySensorEntity):
             self._config_entry.data.get(key, default),
         )
 
-    async def get_forecast(self, weather_entity: str) -> dict:
+    async def call_forecast_service(self, weather_entity: str) -> list:
         """Get the forecast for the weather entity."""
         service_data = {
             "entity_id": weather_entity,
@@ -155,6 +160,25 @@ class CheckWeatherSensor(BinarySensorEntity):
             return_response=True,
         )
         return entity_forecasts.get(weather_entity, {}).get("forecast")
+
+    async def get_weather_forecast(self, weather_entity: str) -> list:
+        """Get the forecast for the weather entity."""
+        weather_data = self.hass.states.get(weather_entity)
+
+        LOGGER.debug("Weather data: %s", weather_data)
+
+        if weather_data is None:
+            self._attr_is_on = None
+            msg = f"Weather entity {weather_entity} not found"
+            raise HomeAssistantError(msg)
+
+        forecasts = await self.call_forecast_service(weather_entity)
+
+        if forecasts is None:
+            msg = f"Weather forecast is not available for {weather_entity}"
+            raise HomeAssistantError(msg)
+
+        return forecasts
 
     def get_next_n_hours_forecast(self, forecasts: list, hours_to_check: int) -> list:
         """Filter forecasts for the next N hours."""
@@ -177,35 +201,25 @@ class CheckWeatherSensor(BinarySensorEntity):
             CONF_WIND_THRESHOLD,
             DEFAULT_WIND_THRESHOLD,
         )
-        temp_threshold = self.get_config_option(
-            CONF_TEMP_THRESHOLD,
-            DEFAULT_TEMP_THRESHOLD,
+        min_temp = self.get_config_option(
+            CONF_MIN_TEMP,
+            DEFAULT_MIN_TEMP,
+        )
+        max_temp = self.get_config_option(
+            CONF_MAX_TEMP,
+            DEFAULT_MAX_TEMP,
         )
 
-        weather_data = self.hass.states.get(weather_entity)
+        forecasts = await self.get_weather_forecast(weather_entity)
 
-        LOGGER.debug("Weather data: %s", weather_data)
-
-        if weather_data is None:
-            self._attr_is_on = None
-            msg = f"Weather entity {weather_entity} not found"
-            raise HomeAssistantError(msg)
-
-        forecasts = await self.get_forecast(weather_entity)
-
-        if forecasts is None:
-            self._attr_is_on = None
-            msg = f"Weather forecast is not available for {weather_entity}"
-            raise HomeAssistantError(msg)
-
-        LOGGER.debug("Checking next %i hours", hours_to_check)
-
+        LOGGER.debug("Forecasts: %s", forecasts)
         # Check if any of the forecasts match the conditions
         is_on = True
         bad_condition = None
         precipitation = False
         strong_wind = False
         cold_temperature = False
+        hot_temperature = False
         bad_weather_time = None
 
         for forecast in self.get_next_n_hours_forecast(forecasts, hours_to_check):
@@ -217,10 +231,18 @@ class CheckWeatherSensor(BinarySensorEntity):
                 precipitation = True
             if forecast.get(ATTR_FORECAST_WIND_SPEED) > wind_threshold:
                 strong_wind = True
-            if forecast.get(ATTR_FORECAST_TEMP) < temp_threshold:
+            if forecast.get(ATTR_FORECAST_TEMP) < min_temp:
                 cold_temperature = True
+            if forecast.get(ATTR_FORECAST_TEMP) > max_temp:
+                hot_temperature = True
 
-            if bad_condition or precipitation or strong_wind or cold_temperature:
+            if (
+                bad_condition
+                or precipitation
+                or strong_wind
+                or cold_temperature
+                or hot_temperature
+            ):
                 is_on = False
                 bad_weather_time = forecast.get(ATTR_FORECAST_TIME)
                 LOGGER.debug("Bad conditions found at %s", bad_weather_time)
@@ -228,13 +250,15 @@ class CheckWeatherSensor(BinarySensorEntity):
                 LOGGER.debug("Precipitation: %s", precipitation)
                 LOGGER.debug("Strong wind: %s", strong_wind)
                 LOGGER.debug("Cold temperature: %s", cold_temperature)
+                LOGGER.debug("Hot temperature: %s", hot_temperature)
                 break
 
         self._attr_is_on = is_on
-        self._attr_condition = bad_condition or weather_data.attributes.get(
+        self._attr_condition = bad_condition or forecasts[0].get(
             ATTR_FORECAST_CONDITION,
         )
         self._attr_precipitation = precipitation
         self._attr_strong_wind = strong_wind
         self._attr_cold_temperature = cold_temperature
+        self._attr_hot_temperature = cold_temperature
         self._attr_time = bad_weather_time

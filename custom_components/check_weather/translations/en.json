@@ -8,7 +8,9 @@
         "data": {
           "weather": "Weather entity",
           "hours": "Hours to check",
-          "temperature_threshold": "Minimal comfortable temperature",
+          "min_temperature": "Minimal comfortable temperature",
+          "max_temperature": "Maximal comfortable temperature",
+          "emperature_threshold": "Minimal comfortable temperature",
           "precipitation_threshold": "Max precipitaion threshold",
           "wind_threshold": "Max comfortable wind speed"
         }
@@ -23,7 +25,8 @@
         "data": {
           "weather": "Weather entity",
           "hours": "Hours to check",
-          "temperature_threshold": "Minimal comfortable temperature",
+          "min_temperature": "Minimal comfortable temperature",
+          "max_temperature": "Maximal comfortable temperature",
           "precipitation_threshold": "Max precipitaion threshold",
           "wind_threshold": "Max comfortable wind speed"
         }
