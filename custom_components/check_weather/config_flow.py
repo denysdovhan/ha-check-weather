@@ -14,13 +14,15 @@ from homeassistant.helpers.selector import selector
 
 from .const import (
     CONF_HOURS,
+    CONF_MAX_TEMP,
+    CONF_MIN_TEMP,
     CONF_PREC_THRESHOLD,
-    CONF_TEMP_THRESHOLD,
     CONF_WEATHER,
     CONF_WIND_THRESHOLD,
     DEFAULT_HOURS,
+    DEFAULT_MAX_TEMP,
+    DEFAULT_MIN_TEMP,
     DEFAULT_PREC_THRESHOLD,
-    DEFAULT_TEMP_THRESHOLD,
     DEFAULT_WIND_THRESHOLD,
     DOMAIN,
     NAME,
@@ -67,13 +69,21 @@ async def build_schema(
                 default=get_config_value(config_entry, CONF_HOURS, DEFAULT_HOURS),
             ): cv.positive_int,
             vol.Optional(
-                CONF_TEMP_THRESHOLD,
+                CONF_MIN_TEMP,
                 default=get_config_value(
                     config_entry,
-                    CONF_TEMP_THRESHOLD,
-                    DEFAULT_TEMP_THRESHOLD,
+                    CONF_MIN_TEMP,
+                    DEFAULT_MIN_TEMP,
                 ),
-            ): cv.positive_float,
+            ): float,
+            vol.Optional(
+                CONF_MAX_TEMP,
+                default=get_config_value(
+                    config_entry,
+                    CONF_MAX_TEMP,
+                    DEFAULT_MAX_TEMP,
+                ),
+            ): float,
             vol.Optional(
                 CONF_PREC_THRESHOLD,
                 default=get_config_value(
