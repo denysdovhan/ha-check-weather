@@ -96,6 +96,7 @@ class CheckWeatherSensor(BinarySensorEntity):
             key=DOMAIN,
             name=NAME,
             icon=ICON_OFF,
+            translation_key=DOMAIN,
         )
         self._config_entry = config_entry
 

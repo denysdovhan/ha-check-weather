@@ -32,5 +32,19 @@
         }
       }
     }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+       "state_attributes": {
+          "condition": { "name": "Condition" },
+          "precipitation": { "name": "Precipitation" },
+          "strong_wind": { "name": "Strong wind" },
+          "bad_weather_time": { "name": "Bad weather at" },
+          "cold_temperature": { "name": "Cold temperature" },
+          "hot_temperature": { "name": "Hot temperature" }
+        }
+      }
+    }
   }
 }
