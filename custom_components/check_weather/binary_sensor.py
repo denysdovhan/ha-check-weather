@@ -146,7 +146,7 @@ class CheckWeatherSensor(BinarySensorEntity):
             self._config_entry.data.get(key, default),
         )
 
-    async def get_forecast(self, weather_entity: str) -> dict:
+    async def call_forecast_service(self, weather_entity: str) -> list:
         """Get the forecast for the weather entity."""
         service_data = {
             "entity_id": weather_entity,
@@ -160,6 +160,25 @@ class CheckWeatherSensor(BinarySensorEntity):
             return_response=True,
         )
         return entity_forecasts.get(weather_entity, {}).get("forecast")
+
+    async def get_weather_forecast(self, weather_entity: str) -> list:
+        """Get the forecast for the weather entity."""
+        weather_data = self.hass.states.get(weather_entity)
+
+        LOGGER.debug("Weather data: %s", weather_data)
+
+        if weather_data is None:
+            self._attr_is_on = None
+            msg = f"Weather entity {weather_entity} not found"
+            raise HomeAssistantError(msg)
+
+        forecasts = await self.call_forecast_service(weather_entity)
+
+        if forecasts is None:
+            msg = f"Weather forecast is not available for {weather_entity}"
+            raise HomeAssistantError(msg)
+
+        return forecasts
 
     def get_next_n_hours_forecast(self, forecasts: list, hours_to_check: int) -> list:
         """Filter forecasts for the next N hours."""
@@ -191,24 +210,9 @@ class CheckWeatherSensor(BinarySensorEntity):
             DEFAULT_MAX_TEMP,
         )
 
-        weather_data = self.hass.states.get(weather_entity)
+        forecasts = await self.get_weather_forecast(weather_entity)
 
-        LOGGER.debug("Weather data: %s", weather_data)
-
-        if weather_data is None:
-            self._attr_is_on = None
-            msg = f"Weather entity {weather_entity} not found"
-            raise HomeAssistantError(msg)
-
-        forecasts = await self.get_forecast(weather_entity)
-
-        if forecasts is None:
-            self._attr_is_on = None
-            msg = f"Weather forecast is not available for {weather_entity}"
-            raise HomeAssistantError(msg)
-
-        LOGGER.debug("Checking next %i hours", hours_to_check)
-
+        LOGGER.debug("Forecasts: %s", forecasts)
         # Check if any of the forecasts match the conditions
         is_on = True
         bad_condition = None
@@ -250,7 +254,7 @@ class CheckWeatherSensor(BinarySensorEntity):
                 break
 
         self._attr_is_on = is_on
-        self._attr_condition = bad_condition or weather_data.attributes.get(
+        self._attr_condition = bad_condition or forecasts[0].get(
             ATTR_FORECAST_CONDITION,
         )
         self._attr_precipitation = precipitation
