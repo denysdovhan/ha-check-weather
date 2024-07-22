@@ -27,7 +27,7 @@ DEFAULT_WIND_THRESHOLD = 20
 
 # Attributes
 ATTR_CONDITION = "condition"
-ATTR_PRECIPIATION = "precipitation"
+ATTR_PRECIPITATION = "precipitation"
 ATTR_STRONG_WIND = "strong_wind"
 ATTR_BAD_WEATHER_TIME = "bad_weather_time"
 ATTR_COLD_TEMPERATURE = "cold_temperature"

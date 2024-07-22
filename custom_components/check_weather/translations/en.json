@@ -11,7 +11,7 @@
           "min_temperature": "Minimal comfortable temperature",
           "max_temperature": "Maximal comfortable temperature",
           "emperature_threshold": "Minimal comfortable temperature",
-          "precipitation_threshold": "Max precipitaion threshold",
+          "precipitation_threshold": "Max precipitation threshold",
           "wind_threshold": "Max comfortable wind speed"
         }
       }
@@ -27,7 +27,7 @@
           "hours": "Hours to check",
           "min_temperature": "Minimal comfortable temperature",
           "max_temperature": "Maximal comfortable temperature",
-          "precipitation_threshold": "Max precipitaion threshold",
+          "precipitation_threshold": "Max precipitation threshold",
           "wind_threshold": "Max comfortable wind speed"
         }
       }

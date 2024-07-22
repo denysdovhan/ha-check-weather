@@ -36,7 +36,7 @@ from .const import (
     ATTR_COLD_TEMPERATURE,
     ATTR_CONDITION,
     ATTR_HOT_TEMPERATURE,
-    ATTR_PRECIPIATION,
+    ATTR_PRECIPITATION,
     ATTR_STRONG_WIND,
     CONF_HOURS,
     CONF_MAX_TEMP,
@@ -133,7 +133,7 @@ class CheckWeatherSensor(BinarySensorEntity):
         """Return the extra state attributes."""
         return {
             ATTR_CONDITION: self._attr_condition,
-            ATTR_PRECIPIATION: self._attr_precipitation,
+            ATTR_PRECIPITATION: self._attr_precipitation,
             ATTR_STRONG_WIND: self._attr_strong_wind,
             ATTR_BAD_WEATHER_TIME: self._attr_time,
             ATTR_COLD_TEMPERATURE: self._attr_cold_temperature,
