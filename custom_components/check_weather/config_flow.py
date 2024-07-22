@@ -75,7 +75,7 @@ async def build_schema(
                     CONF_MIN_TEMP,
                     DEFAULT_MIN_TEMP,
                 ),
-            ): float,
+            ): vol.Coerce(float),
             vol.Optional(
                 CONF_MAX_TEMP,
                 default=get_config_value(
@@ -83,7 +83,7 @@ async def build_schema(
                     CONF_MAX_TEMP,
                     DEFAULT_MAX_TEMP,
                 ),
-            ): float,
+            ): vol.Coerce(float),
             vol.Optional(
                 CONF_PREC_THRESHOLD,
                 default=get_config_value(
