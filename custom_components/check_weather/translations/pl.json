@@ -1,0 +1,49 @@
+{
+  "title": "Check Weather",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ustawienia Check Weather",
+        "description": "Wprowadź zaktualizowane ustawienia sensora Check Weather.",
+        "data": {
+          "weather": "Encja prognozy pogody",
+          "hours": "Ilość godzin do sprawdzenia",
+          "min_temperature": "Minimalna komfortowa temperatura",
+          "max_temperature": "Maksymalna komfortowa temperatura",
+          "precipitation_threshold": "Maksymalny próg opadów",
+          "wind_threshold": "Maksymalny komfortowy próg prędkości wiatru"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Ustawienia Check Weather",
+        "description": "Wprowadź zaktualizowane ustawienia sensora Check Weather.",
+        "data": {
+          "weather": "Encja prognozy pogody",
+          "hours": "Ilość godzin do sprawdzenia",
+          "min_temperature": "Minimalna komfortowa temperatura",
+          "max_temperature": "Maksymalna komfortowa temperatura",
+          "precipitation_threshold": "Maksymalny próg opadów",
+          "wind_threshold": "Maksymalny komfortowy próg prędkości wiatru"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+       "state_attributes": {
+          "condition": { "name": "Stan pogody" },
+          "precipitation": { "name": "Opad" },
+          "strong_wind": { "name": "Silny wiatr" },
+          "bad_weather_time": { "name": "Zła pogoda o" },
+          "cold_temperature": { "name": "Za zimno" },
+          "hot_temperature": { "name": "Za gorąco" }
+        }
+      }
+    }
+  }
+}
