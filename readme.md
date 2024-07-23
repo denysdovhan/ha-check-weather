@@ -68,6 +68,7 @@ Please, help to add more translations and improve existing ones. Here's a list o
 
 - English
 - Українська (Ukrainian)
+- Polski (Polish)
 - [Your language?][add-translation]
 
 ## Development
