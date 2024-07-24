@@ -1,17 +1,17 @@
 {
-  "title": "Wetter prüfen",
+  "title": "Wetterprüfung",
   "config": {
     "step": {
       "user": {
-        "title": "Wetter-Einstellungen prüfen",
-        "description": "Bitte geben Sie die Einstellungen für den Wetter-Sensor ein.",
+        "title": "Einstellungen der Wetterprüfung",
+        "description": "Bitte geben Sie die Einstellungen für den Wetterprüf-Sensor ein.",
         "data": {
           "weather": "Wetterentität",
-          "hours": "Stunden zum Prüfen",
-          "min_temperature": "Minimale angenehme Temperatur",
-          "max_temperature": "Maximale angenehme Temperatur",
+          "hours": "Stunden für die Prüfung",
+          "min_temperature": "Minimale komfortable Temperatur",
+          "max_temperature": "Maximale komfortable Temperatur",
           "precipitation_threshold": "Maximale Niederschlagsschwelle",
-          "wind_threshold": "Maximale angenehme Windgeschwindigkeit"
+          "wind_threshold": "Maximale komfortable Windgeschwindigkeit"
         }
       }
     }
@@ -19,15 +19,15 @@
   "options": {
     "step": {
       "init": {
-        "title": "Wetter-Einstellungen prüfen",
-        "description": "Bitte geben Sie die aktualisierten Einstellungen für den Wetter-Sensor ein.",
+        "title": "Einstellungen der Wetterprüfung",
+        "description": "Bitte geben Sie die aktualisierten Einstellungen für den Wetterprüf-Sensor ein.",
         "data": {
           "weather": "Wetterentität",
-          "hours": "Stunden zum Prüfen",
-          "min_temperature": "Minimale angenehme Temperatur",
-          "max_temperature": "Maximale angenehme Temperatur",
+          "hours": "Stunden für die Prüfung",
+          "min_temperature": "Minimale komfortable Temperatur",
+          "max_temperature": "Maximale komfortable Temperatur",
           "precipitation_threshold": "Maximale Niederschlagsschwelle",
-          "wind_threshold": "Maximale angenehme Windgeschwindigkeit"
+          "wind_threshold": "Maximale komfortable Windgeschwindigkeit"
         }
       }
     }
