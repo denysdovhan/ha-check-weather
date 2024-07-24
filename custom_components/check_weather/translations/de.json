@@ -1,0 +1,49 @@
+{
+  "title": "Wetter prüfen",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Wetter-Einstellungen prüfen",
+        "description": "Bitte geben Sie die Einstellungen für den Wetter-Sensor ein.",
+        "data": {
+          "weather": "Wetterentität",
+          "hours": "Stunden zum Prüfen",
+          "min_temperature": "Minimale angenehme Temperatur",
+          "max_temperature": "Maximale angenehme Temperatur",
+          "precipitation_threshold": "Maximale Niederschlagsschwelle",
+          "wind_threshold": "Maximale angenehme Windgeschwindigkeit"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Wetter-Einstellungen prüfen",
+        "description": "Bitte geben Sie die aktualisierten Einstellungen für den Wetter-Sensor ein.",
+        "data": {
+          "weather": "Wetterentität",
+          "hours": "Stunden zum Prüfen",
+          "min_temperature": "Minimale angenehme Temperatur",
+          "max_temperature": "Maximale angenehme Temperatur",
+          "precipitation_threshold": "Maximale Niederschlagsschwelle",
+          "wind_threshold": "Maximale angenehme Windgeschwindigkeit"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+        "state_attributes": {
+          "condition": { "name": "Bedingung" },
+          "precipitation": { "name": "Niederschlag" },
+          "strong_wind": { "name": "Starker Wind" },
+          "bad_weather_time": { "name": "Schlechtes Wetter um" },
+          "cold_temperature": { "name": "Kalte Temperatur" },
+          "hot_temperature": { "name": "Heiße Temperatur" }
+        }
+      }
+    }
+  }
+}
