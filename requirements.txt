@@ -1,4 +1,4 @@
-homeassistant==2024.9.3
+homeassistant==2024.11.3
 pip>=21.0,<24.3
 pre-commit>=3.7.1
 ruff==0.6.8
