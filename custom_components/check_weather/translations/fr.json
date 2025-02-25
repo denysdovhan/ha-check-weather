@@ -8,7 +8,7 @@
         "data": {
           "weather": "Entité weather",
           "hours": "Heures à vérifier",
-          "min_temperature": "Températeur minimal acceptable",
+          "min_temperature": "Température minimale acceptable",
           "max_temperature": "Température maximale acceptable",
           "precipitation_threshold": "Seuil de précipitation maximal",
           "wind_threshold": "Vitesse de vent maximale acceptable"
@@ -24,7 +24,7 @@
         "data": {
           "weather": "Entité weather",
           "hours": "Heures à vérifier",
-          "min_temperature": "Températeur minimal acceptable",
+          "min_temperature": "Température minimale acceptable",
           "max_temperature": "Température maximale acceptable",
           "precipitation_threshold": "Seuil de précipitation maximal",
           "wind_threshold": "Vitesse de vent maximale acceptable"
@@ -38,7 +38,7 @@
        "state_attributes": {
           "condition": { "name": "Condition" },
           "precipitation": { "name": "Précipitation" },
-          "strong_wind": { "name": "Force du vent" },
+          "strong_wind": { "name": "Vent fort" },
           "bad_weather_time": { "name": "Mauvais temps à" },
           "cold_temperature": { "name": "Température froide" },
           "hot_temperature": { "name": "Température chaude" }
