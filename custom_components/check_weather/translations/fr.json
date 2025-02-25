@@ -1,0 +1,49 @@
+{
+  "title": "Check Weather",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Options Check Weather",
+        "description": "Merci de renseigner les paramètres pour le sensor Check Weather.",
+        "data": {
+          "weather": "Entité weather",
+          "hours": "Heures à vérifier",
+          "min_temperature": "Températeur minimal acceptable",
+          "max_temperature": "Température maximale acceptable",
+          "precipitation_threshold": "Seuil de précipitation maximal",
+          "wind_threshold": "Vitesse de vent maximale acceptable"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Check Weather",
+        "description": "Merci de renseigner les paramètres pour le sensor Check Weather.",
+        "data": {
+          "weather": "Entité weather",
+          "hours": "Heures à vérifier",
+          "min_temperature": "Températeur minimal acceptable",
+          "max_temperature": "Température maximale acceptable",
+          "precipitation_threshold": "Seuil de précipitation maximal",
+          "wind_threshold": "Vitesse de vent maximale acceptable"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+       "state_attributes": {
+          "condition": { "name": "Condition" },
+          "precipitation": { "name": "Précipitation" },
+          "strong_wind": { "name": "Force du vent" },
+          "bad_weather_time": { "name": "Mauvais temps à" },
+          "cold_temperature": { "name": "Température froide" },
+          "hot_temperature": { "name": "Temmpérature chaude" }
+        }
+      }
+    }
+  }
+}
