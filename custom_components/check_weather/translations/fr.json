@@ -3,8 +3,8 @@
   "config": {
     "step": {
       "user": {
-        "title": "Options Check Weather",
-        "description": "Merci de renseigner les paramètres pour le sensor Check Weather.",
+        "title": "Configuration de Check Weather",
+        "description": "Merci de renseigner la configuration pour le sensor Check Weather.",
         "data": {
           "weather": "Entité weather",
           "hours": "Heures à vérifier",
@@ -19,8 +19,8 @@
   "options": {
     "step": {
       "init": {
-        "title": "Options Check Weather",
-        "description": "Merci de renseigner les paramètres pour le sensor Check Weather.",
+        "title": "Configuration de Check Weather",
+        "description": "Merci de renseigner la configuration pour le sensor Check Weather.",
         "data": {
           "weather": "Entité weather",
           "hours": "Heures à vérifier",
@@ -41,7 +41,7 @@
           "strong_wind": { "name": "Force du vent" },
           "bad_weather_time": { "name": "Mauvais temps à" },
           "cold_temperature": { "name": "Température froide" },
-          "hot_temperature": { "name": "Temmpérature chaude" }
+          "hot_temperature": { "name": "Température chaude" }
         }
       }
     }
