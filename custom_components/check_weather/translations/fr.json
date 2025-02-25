@@ -4,14 +4,14 @@
     "step": {
       "user": {
         "title": "Configuration de Check Weather",
-        "description": "Merci de renseigner la configuration pour le sensor Check Weather.",
+        "description": "Merci de renseigner la configuration acceptable pour le capteur Check Weather.",
         "data": {
-          "weather": "Entité weather",
+          "weather": "Entité de type météo",
           "hours": "Heures à vérifier",
-          "min_temperature": "Température minimale acceptable",
-          "max_temperature": "Température maximale acceptable",
-          "precipitation_threshold": "Seuil de précipitation maximal",
-          "wind_threshold": "Vitesse de vent maximale acceptable"
+          "min_temperature": "Température minimale",
+          "max_temperature": "Température maximale",
+          "precipitation_threshold": "Seuil de précipitation",
+          "wind_threshold": "Vitesse de vent maximale"
         }
       }
     }
@@ -20,14 +20,14 @@
     "step": {
       "init": {
         "title": "Configuration de Check Weather",
-        "description": "Merci de renseigner la configuration pour le sensor Check Weather.",
+        "description": "Merci de renseigner la configuration acceptable pour le capteur Check Weather.",
         "data": {
-          "weather": "Entité weather",
+          "weather": "Entité de type météo",
           "hours": "Heures à vérifier",
-          "min_temperature": "Température minimale acceptable",
-          "max_temperature": "Température maximale acceptable",
-          "precipitation_threshold": "Seuil de précipitation maximal",
-          "wind_threshold": "Vitesse de vent maximale acceptable"
+          "min_temperature": "Température minimale",
+          "max_temperature": "Température maximale",
+          "precipitation_threshold": "Seuil de précipitation",
+          "wind_threshold": "Vitesse de vent maximale"
         }
       }
     }
@@ -35,13 +35,13 @@
   "entity": {
     "binary_sensor": {
       "check_weather": {
-       "state_attributes": {
+        "state_attributes": {
           "condition": { "name": "Condition" },
-          "precipitation": { "name": "Précipitation" },
-          "strong_wind": { "name": "Vent fort" },
+          "precipitation": { "name": "Trop de précipitation" },
+          "strong_wind": { "name": "Vent trop fort" },
           "bad_weather_time": { "name": "Mauvais temps à" },
-          "cold_temperature": { "name": "Température froide" },
-          "hot_temperature": { "name": "Température chaude" }
+          "cold_temperature": { "name": "Température trop froide" },
+          "hot_temperature": { "name": "Température trop chaude" }
         }
       }
     }
