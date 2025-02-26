@@ -76,7 +76,7 @@ Please, help to add more translations and improve existing ones. Here's a list o
 
 Want to contribute to the project?
 
-First, thanks! Check [contributing guideline](./CONTRIBUTING.md) for more information.
+First, thanks! Check [contributing guideline](./contributing.md) for more information.
 
 ## License
 
