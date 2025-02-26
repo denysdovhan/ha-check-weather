@@ -70,6 +70,7 @@ Please, help to add more translations and improve existing ones. Here's a list o
 - Українська (Ukrainian)
 - Polski (Polish)
 - Deutsch (German)
+- Español (Spanish)
 - [Your language?][add-translation]
 
 ## Development
