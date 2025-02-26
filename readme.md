@@ -105,4 +105,4 @@ MIT © [Denys Dovhan][denysdovhan]
 [denysdovhan]: https://github.com/denysdovhan
 [hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
-[add-translation]: https://github.com/denysdovhan/check-weather/blob/master/contributing.md#how-to-add-translation
+[add-translation]: https://github.com/denysdovhan/ha-check-weather/blob/master/contributing.md#how-to-add-translation
