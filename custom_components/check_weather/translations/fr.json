@@ -1,0 +1,49 @@
+{
+  "title": "Check Weather",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configuration de Check Weather",
+        "description": "Merci de renseigner la configuration acceptable pour le capteur Check Weather.",
+        "data": {
+          "weather": "Entité de type météo",
+          "hours": "Heures à vérifier",
+          "min_temperature": "Température minimale",
+          "max_temperature": "Température maximale",
+          "precipitation_threshold": "Seuil de précipitation",
+          "wind_threshold": "Vitesse de vent maximale"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configuration de Check Weather",
+        "description": "Merci de renseigner la configuration acceptable pour le capteur Check Weather.",
+        "data": {
+          "weather": "Entité de type météo",
+          "hours": "Heures à vérifier",
+          "min_temperature": "Température minimale",
+          "max_temperature": "Température maximale",
+          "precipitation_threshold": "Seuil de précipitation",
+          "wind_threshold": "Vitesse de vent maximale"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+        "state_attributes": {
+          "condition": { "name": "Condition" },
+          "precipitation": { "name": "Trop de précipitation" },
+          "strong_wind": { "name": "Vent trop fort" },
+          "bad_weather_time": { "name": "Mauvais temps à" },
+          "cold_temperature": { "name": "Température trop froide" },
+          "hot_temperature": { "name": "Température trop chaude" }
+        }
+      }
+    }
+  }
+}
