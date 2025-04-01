@@ -261,5 +261,5 @@ class CheckWeatherSensor(BinarySensorEntity):
         self._attr_precipitation = precipitation
         self._attr_strong_wind = strong_wind
         self._attr_cold_temperature = cold_temperature
-        self._attr_hot_temperature = cold_temperature
+        self._attr_hot_temperature = hot_temperature
         self._attr_time = bad_weather_time
