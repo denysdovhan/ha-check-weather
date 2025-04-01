@@ -1,0 +1,61 @@
+{
+  "title": "Verifica Meteo",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Impostazioni Verifica Meteo",
+        "description": "Inserire le impostazioni per il sensore Verifica Meteo.",
+        "data": {
+          "weather": "Entità meteo",
+          "hours": "Ore da controllare",
+          "min_temperature": "Temperatura confortevole minima",
+          "max_temperature": "Temperatura confortevole massima",
+          "precipitation_threshold": "Soglia massime precipitazioni",
+          "wind_threshold": "Soglia massima velocità del vento"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Impostazioni Verifica Meteo",
+        "description": "Inserire le impostazioni per il sensore Verifica Meteo.",
+        "data": {
+          "weather": "Entità meteo",
+          "hours": "Ore da controllare",
+          "min_temperature": "Temperatura confortevole minima",
+          "max_temperature": "Temperatura confortevole massima",
+          "precipitation_threshold": "Soglia massime precipitazioni",
+          "wind_threshold": "Soglia massima velocità del vento"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "check_weather": {
+        "state_attributes": {
+          "condition": {
+            "name": "Condizioni"
+          },
+          "precipitation": {
+            "name": "Precipitazioni"
+          },
+          "strong_wind": {
+            "name": "Vento Forte"
+          },
+          "bad_weather_time": {
+            "name": "Maltempo alle"
+          },
+          "cold_temperature": {
+            "name": "Bassa Temperatura"
+          },
+          "hot_temperature": {
+            "name": "Alta Temperatura"
+          }
+        }
+      }
+    }
+  }
+}
