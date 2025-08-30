@@ -107,9 +107,13 @@ async def build_schema(
 class CheckWeatherOptionsFlow(config_entries.OptionsFlow):
     """Handle a change to options for an entry."""
 
-    def __init__(self, config_entry: dict) -> None:
-        """Initialize the options flow."""
-        self.config_entry = config_entry
+    # def __init__(self, config_entry: dict) -> None:
+    #     """Initialize the options flow."""
+    #     self.config_entry = config_entry
+
+    @property
+    def config_entry(self):
+        return self.hass.config_entries.async_get_entry(self.handler)
 
     async def async_step_init(
         self,
