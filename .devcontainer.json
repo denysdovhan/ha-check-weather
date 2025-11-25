@@ -1,6 +1,6 @@
 {
   "name": "ha-check-weather",
-  "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13",
   "postCreateCommand": "scripts/setup",
   "forwardPorts": [8123],
   "portsAttributes": {
@@ -20,7 +20,6 @@
         "tamasfe.even-better-toml"
       ],
       "settings": {
-        "python.pythonPath": "/usr/bin/python3",
         "[python]": {
           "editor.formatOnSave": true,
           "editor.defaultFormatter": "charliermarsh.ruff"
@@ -28,5 +27,8 @@
       }
     }
   },
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/va-h/devcontainers-features/uv:1": {}
+  }
 }
