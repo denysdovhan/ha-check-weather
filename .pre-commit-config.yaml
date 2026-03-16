@@ -24,10 +24,10 @@ repos:
     rev: v0.14.1
     hooks:
       - id: ruff
-        args: [ --fix ]
+        args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v4.0.0-alpha.8"
     hooks:
-    -   id: prettier
+      - id: prettier
