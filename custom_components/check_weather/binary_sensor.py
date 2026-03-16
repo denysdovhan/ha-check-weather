@@ -20,7 +20,6 @@ from homeassistant.components.weather import (
     ATTR_CONDITION_SNOWY_RAINY,
     ATTR_FORECAST_CONDITION,
     ATTR_FORECAST_PRECIPITATION,
-    ATTR_FORECAST_PRECIPITATION_PROBABILITY,
     ATTR_FORECAST_TEMP,
     ATTR_FORECAST_TIME,
     ATTR_FORECAST_WIND_SPEED,
@@ -229,15 +228,9 @@ class CheckWeatherSensor(BinarySensorEntity):
 
             if forecast.get(ATTR_FORECAST_CONDITION) in BAD_CONDITIONS:
                 bad_condition = forecast.get(ATTR_FORECAST_CONDITION)
-            if ATTR_FORECAST_PRECIPITATION in forecast:
-                if forecast.get(ATTR_FORECAST_PRECIPITATION) > prec_threshold:
-                    precipitation = True
-            elif (
-                (prec_prob := forecast.get(ATTR_FORECAST_PRECIPITATION_PROBABILITY))
-                is not None
-                # Probabilities are integers (0-100) not floats (0.0-1.0).
-                and prec_prob * 100 > prec_threshold
-            ):
+            if (
+                forecast_precipitation := forecast.get(ATTR_FORECAST_PRECIPITATION)
+            ) is not None and forecast_precipitation > prec_threshold:
                 precipitation = True
             if forecast.get(ATTR_FORECAST_WIND_SPEED) > wind_threshold:
                 strong_wind = True
