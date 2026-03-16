@@ -35,7 +35,7 @@
   "entity": {
     "binary_sensor": {
       "check_weather": {
-       "state_attributes": {
+        "state_attributes": {
           "condition": { "name": "Condición" },
           "precipitation": { "name": "Precipitación" },
           "strong_wind": { "name": "Fuerte viento" },
