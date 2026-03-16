@@ -12,9 +12,10 @@
 [![Buy Me A Coffee][buymeacoffee-image]][buymeacoffee-url]
 [![Twitter][twitter-image]][twitter-url]
 
-> A simple binary sensor for [Home Assistant][home-assistant] that checks the weather for the next hours and turns on when it fits certain conditions.
+> [!NOTE]
+> A simple binary sensor for [Home Assistant][home-assistant] that checks the weather for the next few hours and turns on when it matches certain conditions.
 
-This is a very simple binary sensor that checks the weather for the next few hours and turns on when it fits certain conditions.
+This integration provides a binary sensor that checks the weather for the next few hours and turns on when it matches the conditions you set.
 
 Ideas on how to use this sensor:
 
@@ -28,7 +29,7 @@ You can rename the sensor to anything more meaningful to you.
 
 Your generosity will help me maintain and develop more projects like this one.
 
-- 💖 [Sponsor me on GitHub][gh-sponsors-url]
+- 💖 [Sponsor on GitHub][gh-sponsors-url]
 - ☕️ [Buy Me A Coffee][buymeacoffee-url]
 - 🤝 [Support me on Patreon][patreon-url]
 - Bitcoin: `bc1q7lfx6de8jrqt8mcds974l6nrsguhd6u30c6sg8`
@@ -40,23 +41,23 @@ The quickest way to install this integration is via [HACS][hacs-url] by clicking
 
 [![Add to HACS via My Home Assistant][hacs-install-image]][hasc-install-url]
 
-If it doesn't work, adding this repository to HACS manually by adding this URL:
+If it doesn't work, add this repository to HACS manually by using this URL:
 
 1. Visit **HACS** → **Integrations** → **...** (in the top right) → **Custom repositories**
-1. Click **Add**
-1. Paste `https://github.com/denysdovhan/ha-check-weather` into the **URL** field
-1. Chose **Integration** as a **Category**
-1. **Check Weather** will appear in the list of available integrations. Install it normally.
+2. Click **Add**
+3. Paste `https://github.com/denysdovhan/ha-check-weather` into the **URL** field
+4. Choose **Integration** as the **Category**
+5. **Check Weather** will appear in the list of available integrations. Install it normally.
 
 ## Usage
 
-This integration is configurable via UI. On **Devices and Services** page, click **Add Integration** and search for **Check Weather**.
+This integration is configurable via UI. On the **Devices and Services** page, click **Add Integration** and search for **Check Weather**.
 
 Specify desired configuration options:
 
 ![Screenshot 2024-06-21 at 20 45 49](https://github.com/denysdovhan/ha-check-weather/assets/3459374/26056db5-b800-41a5-b4bd-0ba44254a538)
 
-The integration will create a new `binary_sensor` entity that will turn on when the weather fits the set conditions.
+The integration creates a new `binary_sensor` entity that turns on when the weather matches the configured conditions.
 
 ![Screenshot 2024-06-21 at 20 46 58](https://github.com/denysdovhan/ha-check-weather/assets/3459374/b5c175d8-b397-4efd-af19-f4481a455839)
 
@@ -75,7 +76,7 @@ Please, help to add more translations and improve existing ones. Here's a list o
 
 Want to contribute to the project?
 
-First, thanks! Check [contributing guideline](./CONTRIBUTING.md) for more information.
+First, thanks! Check the [contributing guideline](./CONTRIBUTING.md) for more information.
 
 ## License
 
