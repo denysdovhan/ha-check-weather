@@ -5,16 +5,10 @@ description = "Home Assistant custom component: Check Weather"
 readme = "readme.md"
 requires-python = ">=3.13.2"
 authors = [{ name = "Denys Dovhan", email = "denysdovhan@gmail.com" }]
-dependencies = [
-  "homeassistant==2026.2.3",
-]
+dependencies = ["homeassistant==2026.2.3"]
 
 [dependency-groups]
-dev = [
-  "colorlog==6.10.1",
-  "pre-commit>=3.7.1",
-  "ruff==0.15.6",
-]
+dev = ["colorlog==6.10.1", "pre-commit>=3.7.1", "ruff==0.15.6"]
 
 [tool.ruff]
 target-version = "py313"
@@ -22,14 +16,14 @@ target-version = "py313"
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
-    "ANN401",  # Dynamically typed expressions (typing.Any) are disallowed
-    "D203",    # no-blank-line-before-class (incompatible with formatter)
-    "D212",    # multi-line-summary-first-line (incompatible with formatter)
-    "COM812",  # incompatible with formatter
-    "ISC001",  # incompatible with formatter
-    "TD002",   # todo require author tag
-    "TD003",   # todo should have a link to an issue
-    "FIX002",  # require todo to be resolved
+  "ANN401", # Dynamically typed expressions (typing.Any) are disallowed
+  "D203", # no-blank-line-before-class (incompatible with formatter)
+  "D212", # multi-line-summary-first-line (incompatible with formatter)
+  "COM812", # incompatible with formatter
+  "ISC001", # incompatible with formatter
+  "TD002", # todo require author tag
+  "TD003", # todo should have a link to an issue
+  "FIX002", # require todo to be resolved
 ]
 
 [tool.ruff.lint.flake8-pytest-style]
