@@ -1,6 +1,6 @@
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua/)
 
-![HA Check Weather Logo](./icons/logo.svg)
+![HA Check Weather Logo](./custom_components/check_weather/brand/logo.png)
 
 # HA Check Weather
 
