@@ -41,7 +41,8 @@ The quickest way to install this integration is via [HACS][hacs-url] by clicking
 
 [![Add to HACS via My Home Assistant][hacs-install-image]][hasc-install-url]
 
-If it doesn't work, add this repository to HACS manually by using this URL:
+<details>
+  <summary>If the button doesn't work, add the repository manually</summary>
 
 1. Visit **HACS** → **Integrations** → **...** (in the top right) → **Custom repositories**
 2. Click **Add**
@@ -49,9 +50,22 @@ If it doesn't work, add this repository to HACS manually by using this URL:
 4. Choose **Integration** as the **Category**
 5. **Check Weather** will appear in the list of available integrations. Install it normally.
 
+</details>
+
 ## Usage
 
-This integration is configurable via UI. On the **Devices and Services** page, click **Add Integration** and search for **Check Weather**.
+This integration is configurable via UI. Click a button below to add:
+
+[![Add Check Weather][install-image]][install-url]
+
+<details>
+  <summary>If the button doesn't work, add the integration manually</summary>
+
+1. On the **Devices and Services** page, click **Add Integration**.
+2. Search for **Check Weather**.
+3. Go through the steps to configure the integration.
+
+</details>
 
 Specify desired configuration options:
 
@@ -107,4 +121,6 @@ MIT © [Denys Dovhan][denysdovhan]
 [denysdovhan]: https://github.com/denysdovhan
 [hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
+[install-image]: https://my.home-assistant.io/badges/config_flow_start.svg
+[install-url]: https://my.home-assistant.io/redirect/config_flow_start/?domain=check_weather
 [add-translation]: https://github.com/denysdovhan/ha-check-weather/blob/master/contributing.md#how-to-add-translation
