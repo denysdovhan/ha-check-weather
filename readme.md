@@ -2,7 +2,7 @@
 
 ![HA Check Weather Logo](./custom_components/check_weather/brand/logo.png)
 
-# HA Check Weather
+# Check Weather for Home Assistant
 
 [![GitHub Release][gh-release-image]][gh-release-url]
 [![GitHub Downloads][gh-downloads-image]][gh-downloads-url]
@@ -11,6 +11,8 @@
 [![Patreon][patreon-image]][patreon-url]
 [![Buy Me A Coffee][buymeacoffee-image]][buymeacoffee-url]
 [![Twitter][twitter-image]][twitter-url]
+
+[**English**](./readme.md) | [Українською](./readme.uk.md)
 
 > [!NOTE]
 > A simple binary sensor for [Home Assistant][home-assistant] that checks the weather for the next few hours and turns on when it matches certain conditions.
@@ -39,7 +41,7 @@ Your generosity will help me maintain and develop more projects like this one.
 
 The quickest way to install this integration is via [HACS][hacs-url] by clicking the button below:
 
-[![Add to HACS via My Home Assistant][hacs-install-image]][hasc-install-url]
+[![Add to HACS via My Home Assistant][hacs-install-image]][hacs-install-url]
 
 <details>
   <summary>If the button doesn't work, add the repository manually</summary>
@@ -119,7 +121,7 @@ MIT © [Denys Dovhan][denysdovhan]
 
 [home-assistant]: https://www.home-assistant.io/
 [denysdovhan]: https://github.com/denysdovhan
-[hasc-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration
+[hacs-install-url]: https://my.home-assistant.io/redirect/hacs_repository/?owner=denysdovhan&repository=ha-check-weather&category=integration
 [hacs-install-image]: https://my.home-assistant.io/badges/hacs_repository.svg
 [install-image]: https://my.home-assistant.io/badges/config_flow_start.svg
 [install-url]: https://my.home-assistant.io/redirect/config_flow_start/?domain=check_weather
