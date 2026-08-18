@@ -98,10 +98,10 @@ First, thanks! Check [contributing guideline](./contributing.md) for more inform
 
 ## Other integrations
 
-- [Aerial Danger](https://github.com/denysdovhan/ha-aerial-danger) — detects aerial-threat messages for selected Ukrainian regions and localities.
-- [LUN Misto Air](https://github.com/denysdovhan/ha-lun-misto-air) — provides air quality and environmental data from LUN Misto monitoring stations.
-- [Ukrainian Hydrometeorological Center](https://github.com/denysdovhan/ha-ukr-hmc) — provides weather, radiation, and hydrology data from meteo.gov.ua.
-- [Yasno Outages](https://github.com/denysdovhan/ha-yasno-outages) — provides planned electricity outage schedules, sensors, and calendars from Yasno.
+- 💥 [Aerial Danger](https://github.com/denysdovhan/ha-aerial-danger) — detects aerial-threat messages for selected Ukrainian regions and localities.
+- 💨 [LUN Misto Air](https://github.com/denysdovhan/ha-lun-misto-air) — provides air quality and environmental data from LUN Misto monitoring stations.
+- 🌦️ [Ukrainian Hydrometeorological Center](https://github.com/denysdovhan/ha-ukr-hmc) — provides weather, radiation, and hydrology data from meteo.gov.ua.
+- ⚡️ [Yasno Outages](https://github.com/denysdovhan/ha-yasno-outages) — provides planned electricity outage schedules, sensors, and calendars from Yasno.
 
 ## License
 

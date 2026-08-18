@@ -98,10 +98,10 @@
 
 ## Інші інтеграції
 
-- [Aerial Danger](https://github.com/denysdovhan/ha-aerial-danger) — виявляє повідомлення про повітряні загрози для вибраних регіонів і місцевостей України.
-- [ЛУН Місто Air](https://github.com/denysdovhan/ha-lun-misto-air) — надає дані про якість повітря та довкілля зі станцій моніторингу ЛУН Місто.
-- [Український гідрометеорологічний центр](https://github.com/denysdovhan/ha-ukr-hmc) — надає погодні, радіаційні й гідрологічні дані з meteo.gov.ua.
-- [Yasno Outages](https://github.com/denysdovhan/ha-yasno-outages) — надає графіки планових відключень електроенергії, сенсори та календарі від Yasno.
+- 💥 [Aerial Danger](https://github.com/denysdovhan/ha-aerial-danger) — виявляє повідомлення про повітряні загрози для вибраних регіонів і місцевостей України.
+- 💨 [ЛУН Місто Air](https://github.com/denysdovhan/ha-lun-misto-air) — надає дані про якість повітря та довкілля зі станцій моніторингу ЛУН Місто.
+- 🌦️ [Український гідрометеорологічний центр](https://github.com/denysdovhan/ha-ukr-hmc) — надає погодні, радіаційні й гідрологічні дані з meteo.gov.ua.
+- ⚡️ [Yasno Outages](https://github.com/denysdovhan/ha-yasno-outages) — надає графіки планових відключень електроенергії, сенсори та календарі від Yasno.
 
 ## Ліцензія
 
