@@ -8,7 +8,7 @@ authors = [{ name = "Denys Dovhan", email = "denysdovhan@gmail.com" }]
 dependencies = ["homeassistant==2026.2.3"]
 
 [dependency-groups]
-dev = ["pre-commit>=4.6.2", "ruff==0.16.9"]
+dev = ["pre-commit>=4.6.2", "ruff==0.17.3"]
 
 [tool.ruff]
 target-version = "py313"
